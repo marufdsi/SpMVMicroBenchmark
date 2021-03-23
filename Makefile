@@ -14,14 +14,16 @@ ASSEMBLY_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(ASSEMBLY_DIR)/%.s,$(SRC_FILES))
 
 all: $(TARGET)
 
-$(TARGET): $(OBJ_FILES) $(ASSEMBLY_FILES)
+$(TARGET): $(OBJ_FILES)
 	$(CXX) $(OBJ) $(CXXFLAGS) $(LDFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -o $@ $^
+
+GEN_ASM: $(ASSEMBLY_FILES)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -c -o $@ $<
 
 $(ASSEMBLY_DIR)/%.s: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -o $@ 
+	$(CXX) $(CXXFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -S -o $@ $< 
 
 .PHONY: clean
 
