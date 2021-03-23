@@ -21,7 +21,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -c -o $@ $<
 
 $(ASSEMBLY_DIR)/%.s: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -o $@ 
 
 .PHONY: clean
 
