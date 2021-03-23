@@ -7,15 +7,19 @@ SRC_DIR := src
 OBJ_DIR := obj
 SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)	$(wildcard $(SRC_DIR)/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
+ASSEMBLY_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(ASSEMBLY_DIR)/%.s,$(SRC_FILES))
 
 .PHONY: all
 
 all: $(TARGET)
 
-$(TARGET): $(OBJ_FILES)
+$(TARGET): $(OBJ_FILES) $(ASSEMBLY_FILES)
 	$(CXX) $(OBJ) $(CXXFLAGS) $(LDFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -o $@ $^
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CXX) $(CXXFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -c -o $@ $<
+
+$(ASSEMBLY_DIR)/%.s: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -c -o $@ $<
 
 .PHONY: clean
