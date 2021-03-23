@@ -1,6 +1,7 @@
 TARGET=micro
 CXX=icpc
-CXXFLAGS= -fopenmp -O3 -Wall -xCORE-512 -qopt-zmm-usage=high
+CXXFLAGS= -fopenmp -O3 -Wall -xCORE-AVX512 -qopt-zmm-usage=high
+VEC_WIDTH=8
 
 SRC_DIR := src
 OBJ_DIR := obj
@@ -12,10 +13,10 @@ OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 all: $(TARGET)
 
 $(TARGET): $(OBJ_FILES)
-	$(CXX) $(OBJ) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
+	$(CXX) $(OBJ) $(CXXFLAGS) $(LDFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -o $@ $^
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -c -o $@ $<
 
 .PHONY: clean
 
