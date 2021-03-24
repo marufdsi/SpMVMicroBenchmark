@@ -23,17 +23,17 @@ const int MASTER = 0;
 int main(int argc, char *argv[]) {
     int nRanks, rank;
     /* Initialize MPI */
-//    MPI_Init(&argc, &argv);
-//    MPI_Comm_size(MPI_COMM_WORLD, &nRanks);
-//    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Init(&argc, &argv);
+    MPI_Comm_size(MPI_COMM_WORLD, &nRanks);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     int procs = 1;
     if (argc > 1)
         procs = atoi(argv[1]);
     std::cout << "N_CHAINED_FMAS: " << n_chained_fmas << std::endl;
-//    MPI_Barrier(MPI_COMM_WORLD);
-//    const double t0 = MPI_Wtime();  // start timer
-    const double t0 = omp_get_wtime();  // start timer
+    MPI_Barrier(MPI_COMM_WORLD);
+    const double t0 = MPI_Wtime();  // start timer
+//    const double t0 = omp_get_wtime();  // start timer
     // Benchmark in all threads
     double fa[VECTOR_WIDTH * n_chained_fmas], fb[VECTOR_WIDTH], fc[VECTOR_WIDTH];
 
@@ -260,15 +260,15 @@ int main(int argc, char *argv[]) {
         }
         fa[0:VECTOR_WIDTH * n_chained_fmas] *= 2.0; // Prevent dead code elimination
     }
-//    const double t1 = MPI_Wtime();
-    const double t1 = omp_get_wtime();
-//    MPI_Barrier(MPI_COMM_WORLD);
+    const double t1 = MPI_Wtime();
+//    const double t1 = omp_get_wtime();
+    MPI_Barrier(MPI_COMM_WORLD);
 
     const double gflops = 1.0e-9 * (double) VECTOR_WIDTH * (double) n_trials * (double) flops_per_calc *
                           (double) omp_get_max_threads() * (double) n_chained_fmas;
     printf("Rank=%d, Chained FMAs=%d, vector width=%d, GFLOPs=%.1f, time=%.6f s, performance=%.1f GFLOP/s\n", rank,
            n_chained_fmas, VECTOR_WIDTH, gflops, t1 - t0, gflops / (t1 - t0));
-//    if (rank == MASTER) {
+    if (rank == MASTER) {
         std::ofstream resultCSV;
         std::string folderName = "Results/";
         std::string fileName = procs == 2 ? "FMA_ON_CASCADE_LAKE.csv" : "FMA_ON_SKYLAKE.csv";
@@ -288,7 +288,7 @@ int main(int argc, char *argv[]) {
                   << gflops / (t1 - t0)
                   << std::endl;
         resultCSV.close();
-//    }
-//    MPI_Finalize();
+    }
+    MPI_Finalize();
     return 0;
 }
