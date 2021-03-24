@@ -3,7 +3,7 @@ CXX=icpc
 CXXFLAGS= -fopenmp -O3 -Wall -xCORE-AVX512 -qopt-zmm-usage=high
 VEC_WIDTH=8
 N_CHAINED_FMAS=8
-$(info	VAR is $(N_CHAINED_FMAS))
+$(info	N_CHAINED_FMAS is $(N_CHAINED_FMAS))
 SRC_DIR := src
 OBJ_DIR := obj
 ASSEMBLY_DIR := assembly
@@ -16,7 +16,7 @@ ASSEMBLY_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(ASSEMBLY_DIR)/%.s,$(SRC_FILES))
 all: $(TARGET)
 
 $(TARGET): $(OBJ_FILES)
-	$(CXX) $(OBJ) $(CXXFLAGS) $(LDFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -o $@ $^
+	$(CXX) $(OBJ) $(CXXFLAGS) $(LDFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -DN_CHAINED_FMAS=$(N_CHAINED_FMAS) -o $@ $^
 
 GEN_ASM: $(ASSEMBLY_FILES)
 
