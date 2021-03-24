@@ -19,21 +19,8 @@ int main() {
         fb[0:VECTOR_WIDTH] = 0.5; // fixed
         fc[0:VECTOR_WIDTH] = 1.0; // fixed
 
-        register double *reg_fa[n_chained_fmas];
-        for (int k = 0; k < n_chained_fmas; ++k) {
-            reg_fa[k] = fa + k * VECTOR_WIDTH;
-        }
 
-        int i, j;
-#pragma nounroll // Prevents automatic unrolling by compiler to avoid skewed benchmarks
-        for (i = 0; i < n_trials; i++)
-#pragma omp simd // Ensures that vectorization does occur
-                for (j = 0; j < VECTOR_WIDTH; j++) {
-                    for (int k = 0; k < n_chained_fmas; ++k) {
-                        reg_fa[k][j] = reg_fa[k][j] * fb[j] + fc[j];
-                    }
-                }
-        /*register double *fa01 = fa + 0 * VECTOR_WIDTH; // This is block (R)
+        register double *fa01 = fa + 0 * VECTOR_WIDTH; // This is block (R)
         register double *fa02 = fa + 1 * VECTOR_WIDTH; // To tune for a specific architecture,
         register double *fa03 = fa + 2 * VECTOR_WIDTH; // more or fewer fa* variables
         register double *fa04 = fa + 3 * VECTOR_WIDTH; // must be used
@@ -59,7 +46,7 @@ int main() {
                     fa08[j] = fa08[j] * fb[j] + fc[j];
                     //  fa09[j] = fa09[j]*fb[j] + fc[j];
                     //  fa10[j] = fa10[j]*fb[j] + fc[j];
-                }*/
+                }
         fa[0:VECTOR_WIDTH * n_chained_fmas] *= 2.0; // Prevent dead code elimination
     }
     const double t1 = omp_get_wtime();
