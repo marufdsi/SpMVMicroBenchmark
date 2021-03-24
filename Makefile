@@ -2,6 +2,7 @@ TARGET=micro
 CXX=icpc
 CXXFLAGS= -fopenmp -O3 -Wall -xCORE-AVX512 -qopt-zmm-usage=high
 VEC_WIDTH=8
+N_CHAINED_FMAS=8
 
 SRC_DIR := src
 OBJ_DIR := obj
@@ -20,10 +21,10 @@ $(TARGET): $(OBJ_FILES)
 GEN_ASM: $(ASSEMBLY_FILES)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -DN_CHAINED_FMAS=$(N_CHAINED_FMAS) -c -o $@ $<
 
 $(ASSEMBLY_DIR)/%.s: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -S -o $@ $< 
+	$(CXX) $(CXXFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -DN_CHAINED_FMAS=$(N_CHAINED_FMAS) -S -o $@ $<
 
 .PHONY: clean
 
