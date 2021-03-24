@@ -27,8 +27,8 @@ int main() {
     register double *fa06 = fa +  5*VECTOR_WIDTH;
     register double *fa07 = fa +  6*VECTOR_WIDTH;
     register double *fa08 = fa +  7*VECTOR_WIDTH;
-    register double *fa09 = fa +  8*VECTOR_WIDTH;
-    register double *fa10 = fa +  9*VECTOR_WIDTH;
+   // register double *fa09 = fa +  8*VECTOR_WIDTH;
+   // register double *fa10 = fa +  9*VECTOR_WIDTH;
 
     int i, j;
 #pragma nounroll // Prevents automatic unrolling by compiler to avoid skewed benchmarks
@@ -43,8 +43,8 @@ int main() {
         fa06[j] = fa06[j]*fb[j] + fc[j];
         fa07[j] = fa07[j]*fb[j] + fc[j];
         fa08[j] = fa08[j]*fb[j] + fc[j];
-        fa09[j] = fa09[j]*fb[j] + fc[j];
-        fa10[j] = fa10[j]*fb[j] + fc[j];
+      //  fa09[j] = fa09[j]*fb[j] + fc[j];
+      //  fa10[j] = fa10[j]*fb[j] + fc[j];
       }
     fa[0:VECTOR_WIDTH*n_chained_fmas] *= 2.0; // Prevent dead code elimination
   }
