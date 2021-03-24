@@ -1,6 +1,6 @@
 TARGET=micro
 CXX=mpicxx
-CXXFLAGS= -O3 -Wall -xCORE-AVX512 -qopt-zmm-usage=high
+CXXFLAGS= -O3 -Wall -xCORE-AVX512 #-qopt-zmm-usage=high
 INCLUDE=-I/apps/pkg/intel/2019/compilers_and_libraries_2019.0.117/linux/compiler/include/
 LIB=-L/apps/pkg/intel/2019/compilers_and_libraries_2019.0.117/linux/compiler/lib
 VEC_WIDTH=8
