@@ -21,7 +21,7 @@ const int n_chained_fmas = VAL(N_CHAINED_FMAS); // Must be tuned for architectur
 const int MASTER = 0;
 
 int main(int argc, char *argv[]) {
-    Idx nRanks, rank;
+    int nRanks, rank;
     /* Initialize MPI */
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &nRanks);
