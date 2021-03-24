@@ -13,7 +13,7 @@
 
 const int n_trials = 1000000000; // Enough to keep cores busy for a while and observe a steady state
 const int flops_per_calc = 2; // Multiply + add = 2 instructions
-const int n_chained_fmas = 10; // Must be tuned for architectures here and in blocks (R) and in (E)
+const int n_chained_fmas = 16; // Must be tuned for architectures here and in blocks (R) and in (E)
 
 int main(int argc, char *argv[]) {
     int procs = 1;
@@ -42,12 +42,12 @@ int main(int argc, char *argv[]) {
         register double *fa08 = fa + 7 * VECTOR_WIDTH;
         register double *fa09 = fa + 8 * VECTOR_WIDTH;
         register double *fa10 = fa + 9 * VECTOR_WIDTH;
-//        register double *fa11 = fa + 10 * VECTOR_WIDTH;
-//        register double *fa12 = fa + 11 * VECTOR_WIDTH;
-//        register double *fa13 = fa + 12 * VECTOR_WIDTH;
-//        register double *fa14 = fa + 13 * VECTOR_WIDTH;
-//        register double *fa15 = fa + 14 * VECTOR_WIDTH;
-//        register double *fa16 = fa + 15 * VECTOR_WIDTH;
+        register double *fa11 = fa + 10 * VECTOR_WIDTH;
+        register double *fa12 = fa + 11 * VECTOR_WIDTH;
+        register double *fa13 = fa + 12 * VECTOR_WIDTH;
+        register double *fa14 = fa + 13 * VECTOR_WIDTH;
+        register double *fa15 = fa + 14 * VECTOR_WIDTH;
+        register double *fa16 = fa + 15 * VECTOR_WIDTH;
 //        register double *fa17 = fa + 16 * VECTOR_WIDTH;
 //        register double *fa18 = fa + 17 * VECTOR_WIDTH;
 //        register double *fa19 = fa + 18 * VECTOR_WIDTH;
@@ -83,12 +83,12 @@ int main(int argc, char *argv[]) {
                     fa08[j] = fa08[j] * fb[j] + fc[j];
                     fa09[j] = fa09[j] * fb[j] + fc[j];
                     fa10[j] = fa10[j] * fb[j] + fc[j];
-//                    fa11[j] = fa11[j] * fb[j] + fc[j];
-//                    fa12[j] = fa12[j] * fb[j] + fc[j];
-//                    fa13[j] = fa13[j] * fb[j] + fc[j];
-//                    fa14[j] = fa14[j] * fb[j] + fc[j];
-//                    fa15[j] = fa15[j] * fb[j] + fc[j];
-//                    fa16[j] = fa16[j] * fb[j] + fc[j];
+                    fa11[j] = fa11[j] * fb[j] + fc[j];
+                    fa12[j] = fa12[j] * fb[j] + fc[j];
+                    fa13[j] = fa13[j] * fb[j] + fc[j];
+                    fa14[j] = fa14[j] * fb[j] + fc[j];
+                    fa15[j] = fa15[j] * fb[j] + fc[j];
+                    fa16[j] = fa16[j] * fb[j] + fc[j];
 //                    fa17[j] = fa17[j] * fb[j] + fc[j];
 //                    fa18[j] = fa18[j] * fb[j] + fc[j];
 //                    fa19[j] = fa19[j] * fb[j] + fc[j];
