@@ -18,7 +18,7 @@ N_CHAINED_FMAS=8
 #endif
 const int n_chained_fmas = VAL(N_CHAINED_FMAS); // Must be tuned for architectures here and in blocks (R) and in (E)
 
-int fma(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
     int procs = 1;
     if (argc > 1)
         procs = atoi(argv[1]);
