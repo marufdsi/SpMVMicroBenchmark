@@ -5,7 +5,7 @@ const int n_trials = 1000000000; // Enough to keep cores busy for a while and ob
 const int flops_per_calc = 2; // Multiply + add = 2 instructions
 const int n_chained_fmas = 8; // Must be tuned for architectures here and in blocks (R) and in (E)
 
-int main() {
+int main(int argc, char* argv[]) {
 
 #pragma omp parallel
     {} // Warm up the threads
