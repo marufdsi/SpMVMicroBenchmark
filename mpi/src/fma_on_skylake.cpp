@@ -262,7 +262,7 @@ int main(int argc, char *argv[]) {
     }
 //    const double t1 = MPI_Wtime();
     const double t1 = omp_get_wtime();
-    MPI_Barrier(MPI_COMM_WORLD);
+//    MPI_Barrier(MPI_COMM_WORLD);
 
     const double gflops = 1.0e-9 * (double) VECTOR_WIDTH * (double) n_trials * (double) flops_per_calc *
                           (double) omp_get_max_threads() * (double) n_chained_fmas;
