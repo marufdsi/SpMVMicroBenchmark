@@ -1,8 +1,8 @@
 TARGET=micro
-CXX=mpicxx
+CXX=icpc
 CXXFLAGS= -O3 -Wall -xCORE-AVX512 #-qopt-zmm-usage=high
-INCLUDE=-I/apps/pkg/intel/2019/compilers_and_libraries_2019.0.117/linux/compiler/include/
-LIB=-L/apps/pkg/intel/2019/compilers_and_libraries_2019.0.117/linux/compiler/lib
+MPIFLAGS = -I/apps/pkg/openmpi/4.0.3/rhel7_u5/slurm/gnu/include/ -L/apps/pkg/openmpi/4.0.3/rhel7_u5/slurm/gnu/lib/
+
 VEC_WIDTH=8
 N_CHAINED_FMAS=8
 $(info	N_CHAINED_FMAS is $(N_CHAINED_FMAS))
@@ -18,15 +18,15 @@ ASSEMBLY_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(ASSEMBLY_DIR)/%.s,$(SRC_FILES))
 all: $(TARGET)
 
 $(TARGET): $(OBJ_FILES)
-	$(CXX) $(OBJ) $(CXXFLAGS) $(LDFLAGS) $(INCLUDE) $(LIB) -DVECTOR_WIDTH=$(VEC_WIDTH) -DN_CHAINED_FMAS=$(N_CHAINED_FMAS) -o $@ $^
+	$(CXX) $(OBJ) $(CXXFLAGS) $(LDFLAGS) $(MPIFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -DN_CHAINED_FMAS=$(N_CHAINED_FMAS) -o $@ $^
 
 GEN_ASM: $(ASSEMBLY_FILES)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDE) $(LIB) -DVECTOR_WIDTH=$(VEC_WIDTH) -DN_CHAINED_FMAS=$(N_CHAINED_FMAS) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) $(MPIFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -DN_CHAINED_FMAS=$(N_CHAINED_FMAS) -c -o $@ $<
 
 $(ASSEMBLY_DIR)/%.s: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDE) $(LIB) -DVECTOR_WIDTH=$(VEC_WIDTH) -DN_CHAINED_FMAS=$(N_CHAINED_FMAS) -S -o $@ $<
+	$(CXX) $(CXXFLAGS) $(MPIFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -DN_CHAINED_FMAS=$(N_CHAINED_FMAS) -S -o $@ $<
 
 .PHONY: clean
 
