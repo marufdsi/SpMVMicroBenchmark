@@ -8,50 +8,64 @@ const int n_chained_fmas = 8; // Must be tuned for architectures here and in blo
 int main() {
 
 #pragma omp parallel
-  { } // Warm up the threads
+    {} // Warm up the threads
 
-  const double t0 = omp_get_wtime(); // start timer
+    const double t0 = omp_get_wtime(); // start timer
 #pragma omp parallel
-  { // Benchmark in all threads
-    double fa[VECTOR_WIDTH*n_chained_fmas], fb[VECTOR_WIDTH], fc[VECTOR_WIDTH];
+    { // Benchmark in all threads
+        double fa[VECTOR_WIDTH * n_chained_fmas], fb[VECTOR_WIDTH], fc[VECTOR_WIDTH];
 
-    fa[0:VECTOR_WIDTH*n_chained_fmas] = 0.0; // prototype of a memory-based array
-    fb[0:VECTOR_WIDTH] = 0.5; // fixed
-    fc[0:VECTOR_WIDTH] = 1.0; // fixed
+        fa[0:VECTOR_WIDTH * n_chained_fmas] = 0.0; // prototype of a memory-based array
+        fb[0:VECTOR_WIDTH] = 0.5; // fixed
+        fc[0:VECTOR_WIDTH] = 1.0; // fixed
 
-    register double *fa01 = fa +  0*VECTOR_WIDTH; // This is block (R)
-    register double *fa02 = fa +  1*VECTOR_WIDTH; // To tune for a specific architecture,
-    register double *fa03 = fa +  2*VECTOR_WIDTH; // more or fewer fa* variables
-    register double *fa04 = fa +  3*VECTOR_WIDTH; // must be used
-    register double *fa05 = fa +  4*VECTOR_WIDTH;
-    register double *fa06 = fa +  5*VECTOR_WIDTH;
-    register double *fa07 = fa +  6*VECTOR_WIDTH;
-    register double *fa08 = fa +  7*VECTOR_WIDTH;
-   // register double *fa09 = fa +  8*VECTOR_WIDTH;
-   // register double *fa10 = fa +  9*VECTOR_WIDTH;
+        register double *reg_fa[n_chained_fmas];
+        for (int k = 0; k < n_chained_fmas; ++k) {
+            reg_fa[k] = fa + k * VECTOR_WIDTH;
+        }
 
-    int i, j;
+        int i, j;
 #pragma nounroll // Prevents automatic unrolling by compiler to avoid skewed benchmarks
-    for(i = 0; i < n_trials; i++)
+        for (i = 0; i < n_trials; i++)
 #pragma omp simd // Ensures that vectorization does occur
-      for (j = 0; j < VECTOR_WIDTH; j++) { // VECTOR_WIDTH=4 for AVX2, =8 for AVX-512
-        fa01[j] = fa01[j]*fb[j] + fc[j]; // This is block (E)
-        fa02[j] = fa02[j]*fb[j] + fc[j]; // To tune for a specific architecture,
-        fa03[j] = fa03[j]*fb[j] + fc[j]; // more or fewer such FMA constructs
-        fa04[j] = fa04[j]*fb[j] + fc[j]; // must be used
-        fa05[j] = fa05[j]*fb[j] + fc[j];
-        fa06[j] = fa06[j]*fb[j] + fc[j];
-        fa07[j] = fa07[j]*fb[j] + fc[j];
-        fa08[j] = fa08[j]*fb[j] + fc[j];
-      //  fa09[j] = fa09[j]*fb[j] + fc[j];
-      //  fa10[j] = fa10[j]*fb[j] + fc[j];
-      }
-    fa[0:VECTOR_WIDTH*n_chained_fmas] *= 2.0; // Prevent dead code elimination
-  }
-  const double t1 = omp_get_wtime();
+                for (j = 0; j < VECTOR_WIDTH; j++) {
+                    for (int k = 0; k < n_chained_fmas; ++k) {
+                        reg_fa[k][j] = reg_fa[k][j] * fb[j] + fc[j];
+                    }
+                }
+        /*register double *fa01 = fa + 0 * VECTOR_WIDTH; // This is block (R)
+        register double *fa02 = fa + 1 * VECTOR_WIDTH; // To tune for a specific architecture,
+        register double *fa03 = fa + 2 * VECTOR_WIDTH; // more or fewer fa* variables
+        register double *fa04 = fa + 3 * VECTOR_WIDTH; // must be used
+        register double *fa05 = fa + 4 * VECTOR_WIDTH;
+        register double *fa06 = fa + 5 * VECTOR_WIDTH;
+        register double *fa07 = fa + 6 * VECTOR_WIDTH;
+        register double *fa08 = fa + 7 * VECTOR_WIDTH;
+        // register double *fa09 = fa +  8*VECTOR_WIDTH;
+        // register double *fa10 = fa +  9*VECTOR_WIDTH;
 
-  const double gflops = 1.0e-9*(double)VECTOR_WIDTH*(double)n_trials*(double)flops_per_calc*
-    (double)omp_get_max_threads()*(double)n_chained_fmas;
-  printf("Chained FMAs=%d, vector width=%d, GFLOPs=%.1f, time=%.6f s, performance=%.1f GFLOP/s\n", 
-	 n_chained_fmas, VECTOR_WIDTH, gflops, t1 - t0, gflops/(t1 - t0));
+        int i, j;
+#pragma nounroll // Prevents automatic unrolling by compiler to avoid skewed benchmarks
+        for (i = 0; i < n_trials; i++)
+#pragma omp simd // Ensures that vectorization does occur
+                for (j = 0; j < VECTOR_WIDTH; j++) { // VECTOR_WIDTH=4 for AVX2, =8 for AVX-512
+                    fa01[j] = fa01[j] * fb[j] + fc[j]; // This is block (E)
+                    fa02[j] = fa02[j] * fb[j] + fc[j]; // To tune for a specific architecture,
+                    fa03[j] = fa03[j] * fb[j] + fc[j]; // more or fewer such FMA constructs
+                    fa04[j] = fa04[j] * fb[j] + fc[j]; // must be used
+                    fa05[j] = fa05[j] * fb[j] + fc[j];
+                    fa06[j] = fa06[j] * fb[j] + fc[j];
+                    fa07[j] = fa07[j] * fb[j] + fc[j];
+                    fa08[j] = fa08[j] * fb[j] + fc[j];
+                    //  fa09[j] = fa09[j]*fb[j] + fc[j];
+                    //  fa10[j] = fa10[j]*fb[j] + fc[j];
+                }*/
+        fa[0:VECTOR_WIDTH * n_chained_fmas] *= 2.0; // Prevent dead code elimination
+    }
+    const double t1 = omp_get_wtime();
+
+    const double gflops = 1.0e-9 * (double) VECTOR_WIDTH * (double) n_trials * (double) flops_per_calc *
+                          (double) omp_get_max_threads() * (double) n_chained_fmas;
+    printf("Chained FMAs=%d, vector width=%d, GFLOPs=%.1f, time=%.6f s, performance=%.1f GFLOP/s\n",
+           n_chained_fmas, VECTOR_WIDTH, gflops, t1 - t0, gflops / (t1 - t0));
 }
