@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <iostream>
 #include <omp.h>
 
 #include <math.h>
@@ -81,6 +81,6 @@ int main(int argc, char* argv[]) {
                 << "ChainedFMAs,VectorWidth,GFLOPs,Time,GFLOPSPerSec"<< std::endl;
     }
     infile.close();
-    resultCSV << n_chained_fmas << "," << VECTOR_WIDTH << "," << gflops << "," << (t1-t0) << "," << gflops/(t1-t0)) << std::endl;
+    resultCSV << n_chained_fmas << "," << VECTOR_WIDTH << "," << gflops << "," << (t1-t0) << "," << gflops/(t1-t0) << std::endl;
     resultCSV.close();
 }
