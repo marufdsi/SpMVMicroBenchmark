@@ -1,6 +1,6 @@
 TARGET=micro
 CXX=icpc
-CXXFLAGS= -O3 -Wall -xCORE-AVX512 #-qopt-zmm-usage=high
+CXXFLAGS= -qopenmp -O3 -Wall -xCORE-AVX512 #-qopt-zmm-usage=high
 MPIFLAGS = -I/apps/pkg/openmpi/4.0.3/rhel7_u5/slurm/gnu/include/ -L/apps/pkg/openmpi/4.0.3/rhel7_u5/slurm/gnu/lib/
 
 VEC_WIDTH=8

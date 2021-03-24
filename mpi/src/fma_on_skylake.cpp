@@ -8,8 +8,9 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <unordered_map>
+#include "mpi.h"
 
-//#include "mpi.h"
+
 #define VAL(X) (X)
 const int n_trials = 1000000000; // Enough to keep cores busy for a while and observe a steady state
 const int flops_per_calc = 2; // Multiply + add = 2 instructions
@@ -23,12 +24,8 @@ int main(int argc, char *argv[]) {
     if (argc > 1)
         procs = atoi(argv[1]);
     std::cout<<"N_CHAINED_FMAS: " << n_chained_fmas << std::endl;
-#pragma omp parallel
-    {} // Warm up the threads
-
     const double t0 = omp_get_wtime(); // start timer
-#pragma omp parallel
-    { // Benchmark in all threads
+ // Benchmark in all threads
         double fa[VECTOR_WIDTH * n_chained_fmas], fb[VECTOR_WIDTH], fc[VECTOR_WIDTH];
 
         fa[0:VECTOR_WIDTH * n_chained_fmas] = 0.0; // prototype of a memory-based array
