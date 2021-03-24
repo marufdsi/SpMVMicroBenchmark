@@ -8,7 +8,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <unordered_map>
-//#include "mpi.h"
+#include "mpi.h"
 
 
 #define VAL(X) (X)
