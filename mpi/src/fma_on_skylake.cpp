@@ -21,6 +21,12 @@ const int n_chained_fmas = VAL(N_CHAINED_FMAS); // Must be tuned for architectur
 const int MASTER = 0;
 
 int main(int argc, char *argv[]) {
+    Idx nRanks, rank;
+    /* Initialize MPI */
+    MPI_Init(&argc, &argv);
+    MPI_Comm_size(MPI_COMM_WORLD, &nRanks);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
     int procs = 1;
     if (argc > 1)
         procs = atoi(argv[1]);
