@@ -13,12 +13,10 @@
 #define VAL(X) (X)
 const int n_trials = 1000000000; // Enough to keep cores busy for a while and observe a steady state
 const int flops_per_calc = 2; // Multiply + add = 2 instructions
-#ifdef N_CHAINED_FMAS
-const int n_chained_fmas = VAL(N_CHAINED_FMAS); // Must be tuned for architectures here and in blocks (R) and in (E)
-#else
+#ifndef N_CHAINED_FMAS
 N_CHAINED_FMAS=8
-const int n_chained_fmas = 8; // Must be tuned for architectures here and in blocks (R) and in (E)
 #endif
+const int n_chained_fmas = VAL(N_CHAINED_FMAS); // Must be tuned for architectures here and in blocks (R) and in (E)
 
 int main(int argc, char *argv[]) {
     int procs = 1;
