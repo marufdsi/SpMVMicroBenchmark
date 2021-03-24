@@ -13,7 +13,7 @@
 
 const int n_trials = 1000000000; // Enough to keep cores busy for a while and observe a steady state
 const int flops_per_calc = 2; // Multiply + add = 2 instructions
-const int n_chained_fmas = 15; // Must be tuned for architectures here and in blocks (R) and in (E)
+const int n_chained_fmas = 14; // Must be tuned for architectures here and in blocks (R) and in (E)
 
 int main(int argc, char *argv[]) {
     int procs = 1;
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
         register double *fa12 = fa + 11 * VECTOR_WIDTH;
         register double *fa13 = fa + 12 * VECTOR_WIDTH;
         register double *fa14 = fa + 13 * VECTOR_WIDTH;
-        register double *fa15 = fa + 14 * VECTOR_WIDTH;
+//        register double *fa15 = fa + 14 * VECTOR_WIDTH;
 //        register double *fa16 = fa + 15 * VECTOR_WIDTH;
 //        register double *fa17 = fa + 16 * VECTOR_WIDTH;
 //        register double *fa18 = fa + 17 * VECTOR_WIDTH;
@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
                     fa12[j] = fa12[j] * fb[j] + fc[j];
                     fa13[j] = fa13[j] * fb[j] + fc[j];
                     fa14[j] = fa14[j] * fb[j] + fc[j];
-                    fa15[j] = fa15[j] * fb[j] + fc[j];
+//                    fa15[j] = fa15[j] * fb[j] + fc[j];
 //                    fa16[j] = fa16[j] * fb[j] + fc[j];
 //                    fa17[j] = fa17[j] * fb[j] + fc[j];
 //                    fa18[j] = fa18[j] * fb[j] + fc[j];
