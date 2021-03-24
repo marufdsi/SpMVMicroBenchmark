@@ -29,4 +29,4 @@ $(ASSEMBLY_DIR)/%.s: $(SRC_DIR)/%.cpp
 .PHONY: clean
 
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGET)"-*"
