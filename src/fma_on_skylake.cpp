@@ -13,7 +13,7 @@
 
 const int n_trials = 1000000000; // Enough to keep cores busy for a while and observe a steady state
 const int flops_per_calc = 2; // Multiply + add = 2 instructions
-const int n_chained_fmas = 30; // Must be tuned for architectures here and in blocks (R) and in (E)
+const int n_chained_fmas = 29; // Must be tuned for architectures here and in blocks (R) and in (E)
 
 int main(int argc, char *argv[]) {
     int procs = 1;
@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
         register double *fa27 = fa + 26 * VECTOR_WIDTH;
         register double *fa28 = fa + 27 * VECTOR_WIDTH;
         register double *fa29 = fa + 28 * VECTOR_WIDTH;
-        register double *fa30 = fa + 29 * VECTOR_WIDTH;
+//        register double *fa30 = fa + 29 * VECTOR_WIDTH;
 
         int i, j;
 #pragma nounroll // Prevents automatic unrolling by compiler to avoid skewed benchmarks
@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
                     fa27[j] = fa27[j] * fb[j] + fc[j];
                     fa28[j] = fa28[j] * fb[j] + fc[j];
                     fa29[j] = fa29[j] * fb[j] + fc[j];
-                    fa30[j] = fa30[j] * fb[j] + fc[j];
+//                    fa30[j] = fa30[j] * fb[j] + fc[j];
                 }
         fa[0:VECTOR_WIDTH * n_chained_fmas] *= 2.0; // Prevent dead code elimination
     }
