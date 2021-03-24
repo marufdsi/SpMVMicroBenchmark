@@ -18,7 +18,7 @@ N_CHAINED_FMAS=8
 #endif
 const int n_chained_fmas = VAL(N_CHAINED_FMAS); // Must be tuned for architectures here and in blocks (R) and in (E)
 
-int fma(int argc, char *argv[]) {
+int vec_fma(int argc, char *argv[]) {
     int procs = 1;
     if (argc > 1)
         procs = atoi(argv[1]);
@@ -261,7 +261,7 @@ int fma(int argc, char *argv[]) {
     printf("Chained FMAs=%d, vector width=%d, GFLOPs=%.1f, time=%.6f s, performance=%.1f GFLOP/s\n",
            n_chained_fmas, VECTOR_WIDTH, gflops, t1 - t0, gflops / (t1 - t0));
     std::ofstream resultCSV;
-    std::string folderName = "Results/";
+    std::string folderName = "VecResults/";
     std::string fileName = procs == 2 ? "FMA_ON_CASCADE_LAKE.csv" : "FMA_ON_SKYLAKE.csv";
     if (mkdir(folderName.c_str(), 0777) == -1)
         std::cout << "Directory " << folderName << " is already exist" << std::endl;
