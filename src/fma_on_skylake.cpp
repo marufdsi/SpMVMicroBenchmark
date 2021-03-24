@@ -13,7 +13,7 @@
 
 const int n_trials = 1000000000; // Enough to keep cores busy for a while and observe a steady state
 const int flops_per_calc = 2; // Multiply + add = 2 instructions
-const int n_chained_fmas = 1; // Must be tuned for architectures here and in blocks (R) and in (E)
+const int n_chained_fmas = 2; // Must be tuned for architectures here and in blocks (R) and in (E)
 
 int main(int argc, char *argv[]) {
     int procs = 1;
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 
 
         register double *fa01 = fa + 0 * VECTOR_WIDTH; // This is block (R)
-//        register double *fa02 = fa + 1 * VECTOR_WIDTH; // To tune for a specific architecture,
+        register double *fa02 = fa + 1 * VECTOR_WIDTH; // To tune for a specific architecture,
 //        register double *fa03 = fa + 2 * VECTOR_WIDTH; // more or fewer fa* variables
 //        register double *fa04 = fa + 3 * VECTOR_WIDTH; // must be used
 //        register double *fa05 = fa + 4 * VECTOR_WIDTH;
@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
 #pragma omp simd // Ensures that vectorization does occur
                 for (j = 0; j < VECTOR_WIDTH; j++) { // VECTOR_WIDTH=4 for AVX2, =8 for AVX-512
                     fa01[j] = fa01[j] * fb[j] + fc[j]; // This is block (E)
-//                    fa02[j] = fa02[j] * fb[j] + fc[j]; // To tune for a specific architecture,
+                    fa02[j] = fa02[j] * fb[j] + fc[j]; // To tune for a specific architecture,
 //                    fa03[j] = fa03[j] * fb[j] + fc[j]; // more or fewer such FMA constructs
 //                    fa04[j] = fa04[j] * fb[j] + fc[j]; // must be used
 //                    fa05[j] = fa05[j] * fb[j] + fc[j];
