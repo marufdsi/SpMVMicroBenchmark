@@ -140,7 +140,7 @@ int main(int argc, char *argv[]) {
 
         int i, j;
 #pragma nounroll // Prevents automatic unrolling by compiler to avoid skewed benchmarks
-        for (i = 0; i < n_trials; i++)
+        for (i = 0; i < n_trials; i++){
 #pragma omp simd // Ensures that vectorization does occur
                 for (j = 0; j < VECTOR_WIDTH; j++) { // VECTOR_WIDTH=4 for AVX2, =8 for AVX-512
 # if N_CHAINED_FMAS >= 1
