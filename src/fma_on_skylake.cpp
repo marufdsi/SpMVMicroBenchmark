@@ -24,6 +24,7 @@ int main(int argc, char *argv[]) {
     int procs = 1;
     if (argc > 1)
         procs = atoi(argv[1]);
+    std::cout<<"N_CHAINED_FMAS: " << n_chained_fmas << std::endl;
 #pragma omp parallel
     {} // Warm up the threads
 
