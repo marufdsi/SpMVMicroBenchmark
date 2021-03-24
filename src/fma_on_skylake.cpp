@@ -13,11 +13,11 @@
 
 const int n_trials = 1000000000; // Enough to keep cores busy for a while and observe a steady state
 const int flops_per_calc = 2; // Multiply + add = 2 instructions
-const int n_chained_fmas = 8; // Must be tuned for architectures here and in blocks (R) and in (E)
+const int n_chained_fmas = 30; // Must be tuned for architectures here and in blocks (R) and in (E)
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
     int procs = 1;
-    if(argc > 1)
+    if (argc > 1)
         procs = atoi(argv[1]);
 #pragma omp parallel
     {} // Warm up the threads
@@ -40,8 +40,28 @@ int main(int argc, char* argv[]) {
         register double *fa06 = fa + 5 * VECTOR_WIDTH;
         register double *fa07 = fa + 6 * VECTOR_WIDTH;
         register double *fa08 = fa + 7 * VECTOR_WIDTH;
-        // register double *fa09 = fa +  8*VECTOR_WIDTH;
-        // register double *fa10 = fa +  9*VECTOR_WIDTH;
+        register double *fa09 = fa + 8 * VECTOR_WIDTH;
+        register double *fa10 = fa + 9 * VECTOR_WIDTH;
+        register double *fa11 = fa + 10 * VECTOR_WIDTH;
+        register double *fa12 = fa + 11 * VECTOR_WIDTH;
+        register double *fa13 = fa + 12 * VECTOR_WIDTH;
+        register double *fa14 = fa + 13 * VECTOR_WIDTH;
+        register double *fa15 = fa + 14 * VECTOR_WIDTH;
+        register double *fa16 = fa + 15 * VECTOR_WIDTH;
+        register double *fa17 = fa + 16 * VECTOR_WIDTH;
+        register double *fa18 = fa + 17 * VECTOR_WIDTH;
+        register double *fa19 = fa + 18 * VECTOR_WIDTH;
+        register double *fa20 = fa + 19 * VECTOR_WIDTH;
+        register double *fa21 = fa + 20 * VECTOR_WIDTH;
+        register double *fa22 = fa + 21 * VECTOR_WIDTH;
+        register double *fa23 = fa + 22 * VECTOR_WIDTH;
+        register double *fa24 = fa + 23 * VECTOR_WIDTH;
+        register double *fa25 = fa + 24 * VECTOR_WIDTH;
+        register double *fa26 = fa + 25 * VECTOR_WIDTH;
+        register double *fa27 = fa + 26 * VECTOR_WIDTH;
+        register double *fa28 = fa + 27 * VECTOR_WIDTH;
+        register double *fa29 = fa + 28 * VECTOR_WIDTH;
+        register double *fa30 = fa + 29 * VECTOR_WIDTH;
 
         int i, j;
 #pragma nounroll // Prevents automatic unrolling by compiler to avoid skewed benchmarks
@@ -56,8 +76,28 @@ int main(int argc, char* argv[]) {
                     fa06[j] = fa06[j] * fb[j] + fc[j];
                     fa07[j] = fa07[j] * fb[j] + fc[j];
                     fa08[j] = fa08[j] * fb[j] + fc[j];
-                    //  fa09[j] = fa09[j]*fb[j] + fc[j];
-                    //  fa10[j] = fa10[j]*fb[j] + fc[j];
+                    fa09[j] = fa09[j] * fb[j] + fc[j];
+                    fa10[j] = fa10[j] * fb[j] + fc[j];
+                    fa11[j] = fa11[j] * fb[j] + fc[j];
+                    fa12[j] = fa12[j] * fb[j] + fc[j];
+                    fa13[j] = fa13[j] * fb[j] + fc[j];
+                    fa14[j] = fa14[j] * fb[j] + fc[j];
+                    fa15[j] = fa15[j] * fb[j] + fc[j];
+                    fa16[j] = fa16[j] * fb[j] + fc[j];
+                    fa17[j] = fa17[j] * fb[j] + fc[j];
+                    fa18[j] = fa18[j] * fb[j] + fc[j];
+                    fa19[j] = fa19[j] * fb[j] + fc[j];
+                    fa20[j] = fa20[j] * fb[j] + fc[j];
+                    fa21[j] = fa21[j] * fb[j] + fc[j];
+                    fa22[j] = fa22[j] * fb[j] + fc[j];
+                    fa23[j] = fa23[j] * fb[j] + fc[j];
+                    fa24[j] = fa24[j] * fb[j] + fc[j];
+                    fa25[j] = fa25[j] * fb[j] + fc[j];
+                    fa26[j] = fa26[j] * fb[j] + fc[j];
+                    fa27[j] = fa27[j] * fb[j] + fc[j];
+                    fa28[j] = fa28[j] * fb[j] + fc[j];
+                    fa29[j] = fa29[j] * fb[j] + fc[j];
+                    fa30[j] = fa30[j] * fb[j] + fc[j];
                 }
         fa[0:VECTOR_WIDTH * n_chained_fmas] *= 2.0; // Prevent dead code elimination
     }
@@ -79,9 +119,10 @@ int main(int argc, char* argv[]) {
 
     if (!infile.good()) {
         resultCSV
-                << "ChainedFMAs,VectorWidth,GFLOPs,Time,GFLOPSPerSec"<< std::endl;
+                << "ChainedFMAs,VectorWidth,GFLOPs,Time,GFLOPSPerSec" << std::endl;
     }
     infile.close();
-    resultCSV << n_chained_fmas << "," << VECTOR_WIDTH << "," << gflops << "," << (t1-t0) << "," << gflops/(t1-t0) << std::endl;
+    resultCSV << n_chained_fmas << "," << VECTOR_WIDTH << "," << gflops << "," << (t1 - t0) << "," << gflops / (t1 - t0)
+              << std::endl;
     resultCSV.close();
 }
