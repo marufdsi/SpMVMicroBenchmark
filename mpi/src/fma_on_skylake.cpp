@@ -258,8 +258,8 @@ int main(int argc, char *argv[]) {
             fa35[j] = fa35[j] * fb[j] + fc[j];
 #endif
         }
-//        fa[0:VECTOR_WIDTH * n_chained_fmas] *= 2.0; // Prevent dead code elimination
     }
+    fa[0:VECTOR_WIDTH * n_chained_fmas] *= 2.0; // Prevent dead code elimination
     const double t1 = MPI_Wtime();
 //    const double t1 = omp_get_wtime();
     MPI_Barrier(MPI_COMM_WORLD);
