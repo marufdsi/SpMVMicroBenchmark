@@ -13,8 +13,8 @@
 #SBATCH --output=mpi_fma_skylake_%j.log     # Standard output and error log
 
 # Clear the environment from any previously loaded modules
-#export KMP_HW_SUBSET=1t
-#export KMP_AFFINITY=compact,1
+export KMP_HW_SUBSET=1t
+export KMP_AFFINITY=compact,1
 #module purge > /dev/null 2>&1
 #module load openmpi/4.0.3
 #module load intel/19.0.0
