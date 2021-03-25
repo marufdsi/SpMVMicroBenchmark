@@ -148,9 +148,36 @@ we should at least use $4\times 2=8$ instruction at a time to populate the pipel
 \begin{figure}[hbt!]
 	\centering
 	\subfigure[Vector Width: 4]{\includegraphics[width=0.48\linewidth]{figures/skylake_mpi_fma_roofline_model_for_vec_4.pdf}		\label{fig:mpi-skl-vec-4}}
-	\subfigure[Vector Width: 8]{\includegraphics[width=0.48\linewidth]{figures/skylake_mpi_fma_roofline_model_for_vec_8.pdf}		\label{fig:mpi-skl-vec-4}}
+	\subfigure[Vector Width: 8]{\includegraphics[width=0.48\linewidth]{figures/skylake_mpi_fma_roofline_model_for_vec_8.pdf}		\label{fig:mpi-skl-vec-8}}
 	\caption{Skylake: (MPI)Roofline model for bandwidth for FMA operation}
 	\label{fig:mpi-skl-roofline}
+\end{figure}
+
+
+\begin{figure}[hbt!]
+	\centering
+	\subfigure[Vector Width: 4]{\includegraphics[width=0.48\linewidth]{figures/cascade_lake_mpi_fma_roofline_model_for_vec_4.pdf}		\label{fig:mpi-cas-vec-4}}
+	\subfigure[Vector Width: 8]{\includegraphics[width=0.48\linewidth]{figures/cascade_lake_mpi_fma_roofline_model_for_vec_8.pdf}		\label{fig:mpi-cas-vec-8}}
+	\caption{Cascade Lake: (MPI)Roofline model for bandwidth for FMA operation}
+	\label{fig:mpi-cas-roofline}
+\end{figure}
+
+
+\begin{figure}[hbt!]
+	\centering
+	\subfigure[Vector Width: 4]{\includegraphics[width=0.48\linewidth]{figures/skylake_omp_fma_roofline_model_for_vec_4.pdf}		\label{fig:omp-skl-vec-4}}
+	\subfigure[Vector Width: 8]{\includegraphics[width=0.48\linewidth]{figures/skylake_omp_fma_roofline_model_for_vec_8.pdf}		\label{fig:omp-skl-vec-8}}
+	\caption{Skylake: (Shared memory parallel)Roofline model for bandwidth for FMA operation}
+	\label{fig:omp-skl-roofline}
+\end{figure}
+
+
+\begin{figure}[hbt!]
+	\centering
+	\subfigure[Vector Width: 4]{\includegraphics[width=0.48\linewidth]{figures/cascade_lake_omp_fma_roofline_model_for_vec_4.pdf}		\label{fig:omp-cas-vec-4}}
+	\subfigure[Vector Width: 8]{\includegraphics[width=0.48\linewidth]{figures/cascade_lake_omp_fma_roofline_model_for_vec_8.pdf}		\label{fig:omp-cas-vec-8}}
+	\caption{Cascade lake: (Shared memory parallel)Roofline model for bandwidth for FMA operation}
+	\label{fig:omp-cas-roofline}
 \end{figure}
 
 We can estimate the theoritical peak performance a single FMA by the following equation,
