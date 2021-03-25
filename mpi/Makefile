@@ -1,7 +1,7 @@
 TARGET=micro
 CXX=icpc
-CXXFLAGS= -qopenmp -O3 -Wall -xCORE-AVX512 #-qopt-zmm-usage=high
-#MPIFLAGS = -I/apps/pkg/openmpi/4.0.3/rhel7_u5/pbs/gnu/include/ -L/apps/pkg/openmpi/4.0.3/rhel7_u5/pbs/gnu/lib/
+CXXFLAGS= -qopenmp -O3 -Wall -xCORE-AVX512 -qopt-zmm-usage=high
+MPIFLAGS = -I/apps/pkg/openmpi/4.0.3/rhel7_u5/pbs/gnu_mxm/include -pthread -L/usr/lib64 -Wl,-rpath -Wl,/usr/lib64 -Wl,-rpath -Wl,/apps/pkg/openmpi/4.0.3/rhel7_u5/pbs/gnu_mxm/lib -Wl,--enable-new-dtags -L/apps/pkg/openmpi/4.0.3/rhel7_u5/pbs/gnu_mxm/lib -lmpi_cxx -lmpi
 
 MPI_COMPILE_FLAGS = $(shell mpicxx --showme:compile)
 MPI_LINK_FLAGS = $(shell mpicxx --showme:link)
@@ -23,17 +23,17 @@ ASSEMBLY_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(ASSEMBLY_DIR)/%.s,$(SRC_FILES))
 all: $(TARGET)
 
 $(TARGET): $(OBJ_FILES)
-	$(CXX) $(OBJ) $(CXXFLAGS) $(LDFLAGS) $(MPI_LINK_FLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -DN_CHAINED_FMAS=$(N_CHAINED_FMAS) -o $@ $^
+	$(CXX) $(OBJ) $(CXXFLAGS) $(LDFLAGS) $(MPIFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -DN_CHAINED_FMAS=$(N_CHAINED_FMAS) -o $@ $^
 
 GEN_ASM: $(ASSEMBLY_FILES)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) $(MPI_COMPILE_FLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -DN_CHAINED_FMAS=$(N_CHAINED_FMAS) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) $(MPIFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -DN_CHAINED_FMAS=$(N_CHAINED_FMAS) -c -o $@ $<
 
 $(ASSEMBLY_DIR)/%.s: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) $(MPI_COMPILE_FLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -DN_CHAINED_FMAS=$(N_CHAINED_FMAS) -S -o $@ $<
+	$(CXX) $(CXXFLAGS) $(MPIFLAGS) -DVECTOR_WIDTH=$(VEC_WIDTH) -DN_CHAINED_FMAS=$(N_CHAINED_FMAS) -S -o $@ $<
 
 .PHONY: clean
 
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGET)* *.log obj/*
