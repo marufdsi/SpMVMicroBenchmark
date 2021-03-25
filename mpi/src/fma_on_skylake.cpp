@@ -264,7 +264,7 @@ int main(int argc, char *argv[]) {
     MPI_Barrier(MPI_COMM_WORLD);
 
     const double gflops = 1.0e-9 * (double) VECTOR_WIDTH * (double) n_trials * (double) flops_per_calc *
-                          (double) omp_get_max_threads() * (double) n_chained_fmas;
+                          (double) n_chained_fmas;
     double time = (t1 - t0);
     double bandwidth = gflops / time;
     double avg_time = 0, max_time, avg_gflops = 0, max_gflops = 0, avg_bandwidth = 0, max_bandwidth = 0;
