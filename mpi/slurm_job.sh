@@ -23,5 +23,5 @@ export KMP_AFFINITY=compact,1
 #lscpu
 processor=1
 target="micro-vec"$1"-fma"$2
-mpirun ./$target $processor
+mpirun -np 36 ./$target $processor
 
