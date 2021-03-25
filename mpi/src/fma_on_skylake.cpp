@@ -266,8 +266,23 @@ int main(int argc, char *argv[]) {
 
     const double gflops = 1.0e-9 * (double) VECTOR_WIDTH * (double) n_trials * (double) flops_per_calc *
                           (double) omp_get_max_threads() * (double) n_chained_fmas;
+    double time = (t1 - t0);
+    double bandwidth = gflops / time;
+    double avg_time = 0, max_time, avg_gflops = 0, max_gflops = 0, avg_bandwidth = 0, max_bandwidth = 0;
+    MPI_Reduce(&time, &avg_time, 1, MPI_DOUBLE, MPI_SUM, MASTER, MPI_COMM_WORLD);
+    MPI_Reduce(&time, &max_time, 1, MPI_DOUBLE, MPI_MAX, MASTER, MPI_COMM_WORLD);
+    avg_time /= nRanks;
+
+    MPI_Reduce(&gflops, &avg_gflops, 1, MPI_DOUBLE, MPI_SUM, MASTER, MPI_COMM_WORLD);
+    MPI_Reduce(&gflops, &max_gflops, 1, MPI_DOUBLE, MPI_MAX, MASTER, MPI_COMM_WORLD);
+    avg_gflops /= nRanks;
+
+    MPI_Reduce(&bandwidth, &avg_bandwidth, 1, MPI_DOUBLE, MPI_SUM, MASTER, MPI_COMM_WORLD);
+    MPI_Reduce(&bandwidth, &max_bandwidth, 1, MPI_DOUBLE, MPI_MAX, MASTER, MPI_COMM_WORLD);
+    avg_bandwidth /= nRanks;
     printf("Rank=%d, Chained FMAs=%d, vector width=%d, GFLOPs=%.1f, time=%.6f s, performance=%.1f GFLOP/s\n", rank,
            n_chained_fmas, VECTOR_WIDTH, gflops, t1 - t0, gflops / (t1 - t0));
+
     if (rank == MASTER) {
         std::ofstream resultCSV;
         std::string folderName = "Results/";
@@ -281,12 +296,12 @@ int main(int argc, char *argv[]) {
 
         if (!infile.good()) {
             resultCSV
-                    << "ChainedFMAs,VectorWidth,GFLOPs,Time,GFLOPSPerSec" << std::endl;
+                    << "ChainedFMAs,VectorWidth,AvgGFLOPs,MaxGFLOPs,AvgTime,MaxTime,AvgGFLOPSPerSec,MaxGFLOPSPerSec,Processes"
+                    << std::endl;
         }
         infile.close();
-        resultCSV << n_chained_fmas << "," << VECTOR_WIDTH << "," << gflops << "," << (t1 - t0) << ","
-                  << gflops / (t1 - t0)
-                  << std::endl;
+        resultCSV << n_chained_fmas << "," << VECTOR_WIDTH << "," << avg_gflops << "," << max_gflops << "," << avg_time
+                  << "," << max_time << "," << avg_bandwidth << "," << max_bandwidth << "," << nRanks << std::endl;
         resultCSV.close();
     }
     MPI_Finalize();
