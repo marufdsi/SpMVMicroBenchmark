@@ -20,7 +20,7 @@ N_CHAINED_FMAS = 8
 const int n_chained_fmas = VAL(N_CHAINED_FMAS); // Must be tuned for architectures here and in blocks (R) and in (E)
 const int MASTER = 0;
 
-int main(int argc, char *argv[]) {
+int _fma_(int argc, char *argv[]) {
     int nRanks, rank;
     /* Initialize MPI */
     MPI_Init(&argc, &argv);
