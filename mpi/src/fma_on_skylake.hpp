@@ -9,7 +9,6 @@
 
 class fma_on_skylake : utill{
 public:
-    fma_on_skylake();
     int _fma_(int argc, char *argv[]);
 };
 
