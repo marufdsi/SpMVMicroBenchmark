@@ -9,18 +9,10 @@
 #include <unistd.h>
 #include <unordered_map>
 #include "mpi.h"
+#include "fma_on_skylake.hpp"
+#include "utill.h"
 
-
-#define VAL(X) (X)
-const int n_trials = 1000000000; // Enough to keep cores busy for a while and observe a steady state
-const int flops_per_calc = 2; // Multiply + add = 2 instructions
-#ifndef N_CHAINED_FMAS
-N_CHAINED_FMAS = 8
-#endif
-const int n_chained_fmas = VAL(N_CHAINED_FMAS); // Must be tuned for architectures here and in blocks (R) and in (E)
-const int MASTER = 0;
-
-int _fma_(int argc, char *argv[]) {
+int fma_on_skylake::_fma_(int argc, char *argv[]) {
     int nRanks, rank;
     /* Initialize MPI */
     MPI_Init(&argc, &argv);
