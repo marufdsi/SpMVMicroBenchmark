@@ -7,7 +7,7 @@
 
 #include "utill.hpp"
 
-class fma_on_skylake : utill{
+class fma_on_skylake : public utill{
 public:
     int _fma_(int argc, char *argv[]);
 };
