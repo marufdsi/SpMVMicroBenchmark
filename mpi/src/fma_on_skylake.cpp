@@ -10,7 +10,7 @@
 #include <unordered_map>
 #include "mpi.h"
 #include "fma_on_skylake.hpp"
-#include "utill.h"
+#include "utill.hpp"
 
 int fma_on_skylake::_fma_(int argc, char *argv[]) {
     int nRanks, rank;
