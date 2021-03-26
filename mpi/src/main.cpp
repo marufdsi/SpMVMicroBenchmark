@@ -5,6 +5,6 @@
 #include "fma_on_skylake.hpp"
 #include "utill.hpp"
 int main(int argc, char *argv[]){
-    _fma_(argc, argv);
+    fma_on_skylake::_fma_(argc, argv);
     return 0;
 }
