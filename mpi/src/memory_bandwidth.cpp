@@ -45,9 +45,8 @@ void memory_bandwidth::test_memory_bandwidth(int argc, char* argv[], int argi) {
             resultCSV << "Size,AvgTime,AvgBandwidth,Processes" << std::endl;
         }
         infile.close();
-        for(auto p : seq_mem_bandwidth) {
-            resultCSV << mem_size << "," << p.first << "," << p.second << "," << nRanks << std::endl;
-        }
+        resultCSV << mem_size << "," << seq_mem_bandwidth.first << "," << seq_mem_bandwidth.second << "," << nRanks << std::endl;
+
         resultCSV.close();
     }
     delete dram_array;
