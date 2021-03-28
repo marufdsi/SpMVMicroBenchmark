@@ -20,19 +20,20 @@ int main(int argc, char *argv[]){
         if (argc > argi) {
             procs = atoi(argv[argi++]);
         }
+        size_t mem_size = 1000000;
+        if (argc > argi) {
+            mem_size = std::strtoull(argv[argi++], NULL, 10);
+        }
         uint32_t iterations=10;
         if (argc > argi) {
             iterations = atoi(argv[argi++]);
         }
-        size_t start_mem_size = 1000000;
+        uint32_t skip=5;
         if (argc > argi) {
-            start_mem_size = std::strtoull(argv[argi++], NULL, 10);
+            skip = atoi(argv[argi++]);
         }
-        for(size_t mem_size = start_mem_size; mem_size<=16*start_mem_size; mem_size*=2) {
-//            uint32_t iterations = 10;
-            memory_bandwidth memoryBandwidth(procs, mem_size, iterations);
-            memoryBandwidth.test_memory_bandwidth(argc, argv, argi);
-        }
+        memory_bandwidth memoryBandwidth(procs, mem_size, iterations, skip);
+        memoryBandwidth.test_memory_bandwidth(argc, argv, argi);
     }
     return 0;
 }

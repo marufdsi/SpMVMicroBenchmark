@@ -12,8 +12,7 @@
 #include <unistd.h>
 
 void memory_bandwidth::test_memory_bandwidth(int argc, char* argv[], int argi) {
-    if(argc>argi)
-        procs = atoi(argv[argi]);
+
     /* Initialize MPI */
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &nRanks);
