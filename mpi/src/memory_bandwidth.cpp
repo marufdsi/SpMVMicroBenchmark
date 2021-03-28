@@ -45,6 +45,6 @@ std::vector<double> memory_bandwidth::sequential_read(char *arr, size_t size) {
         if(rank == MASTER)
             std::cout<< iter << " " << time_elapsed << " " << bandwidth.back() << std::endl;
     }
-    printf("IGNORE(%llu)\n", _mm256_extract_epi64(s, 0));
+    std::cout<<"IGNORE( " << _mm256_extract_epi64(s, 0) << " )" << std::endl;
     return bandwidth;
 }
