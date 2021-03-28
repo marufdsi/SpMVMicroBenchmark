@@ -73,6 +73,7 @@ std::pair<double, double> memory_bandwidth::sequential_read(char *arr, size_t si
             total_bandwidth += (double) size / time_elapsed;
         }
     }
+    MPI_Barrier(MPI_COMM_WORLD);
     total_time /= iterations;
     total_bandwidth /= iterations;
     MPI_Reduce(&total_time, &avg_time, 1, MPI_DOUBLE, MPI_SUM, MASTER, MPI_COMM_WORLD);
