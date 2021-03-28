@@ -14,6 +14,8 @@
 
 class memory_bandwidth {
 private:
+    int nRanks;
+    int rank;
 public:
     uint32_t iterations;
     uint32_t mem_size;
