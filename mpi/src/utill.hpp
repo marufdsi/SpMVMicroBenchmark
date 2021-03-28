@@ -6,6 +6,7 @@
 #define SPMVMICROBENCHMARK_UTILL_HPP
 
 #include <unordered_map>
+#include <string>
 
 #define MASTER 0
 
