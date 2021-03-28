@@ -8,6 +8,6 @@ int main(int argc, char *argv[]){
     int argi=1;
 //    if(atoi(argv[argi]) == )
     fma_on_skylake fma_obj;
-    fma_obj._fma_(argc, argv);
+    fma_obj._fma_(argc, argv, argi);
     return 0;
 }
