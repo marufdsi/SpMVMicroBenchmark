@@ -13,17 +13,17 @@
 class utill {
 
 public:
-    std::unordered_map<std::string, int> ALGORITHMS = std::unordered_map<std::string, int>{
-        { "FMA", 1 },
-        { "SEQUENTIAL_READ", 2 },
-        { "RANDOM_READ", 3 }
-    };
-
-//    std::enum ALGO_NAMES{
-//        FMA,
-//        SEQUENTIAL_READ,
-//        RANDOM_READ
+//    std::unordered_map<std::string, int> ALGORITHMS = std::unordered_map<std::string, int>{
+//        { "FMA", 1 },
+//        { "SEQUENTIAL_READ", 2 },
+//        { "RANDOM_READ", 3 }
 //    };
+
+    enum ALGORITHMS{
+        FMA = 1,
+        SEQUENTIAL_READ = 2 ,
+        RANDOM_READ = 3
+    };
 };
 
 

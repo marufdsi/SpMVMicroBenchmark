@@ -6,7 +6,7 @@
 #include "utill.hpp"
 int main(int argc, char *argv[]){
     int argi=1;
-    if(atoi(argv[argi]) == )
+//    if(atoi(argv[argi]) == )
     fma_on_skylake fma_obj;
     fma_obj._fma_(argc, argv);
     return 0;
