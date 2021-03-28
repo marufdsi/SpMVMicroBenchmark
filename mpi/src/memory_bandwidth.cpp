@@ -3,6 +3,7 @@
 //
 
 #include "memory_bandwidth.hpp"
+#include "mpi.h"
 
 void memory_bandwidth::test_memory_bandwidth(int argc, char* argv[]) {
     int nRanks, rank;
