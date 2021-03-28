@@ -33,7 +33,7 @@ public:
 
     void test_memory_bandwidth(int argc, char* argv[], int argi);
 
-    std::vector<std::pair<double, double> > sequential_read(char* arr, size_t size);
+    std::pair<double, double> sequential_read(char* arr, size_t size);
     std::vector<std::pair<double, double> > random_read(char* arr, size_t size);
     std::vector<std::pair<double, double> > sequential_write(char* arr, size_t size);
     std::vector<std::pair<double, double> > random_write(char* arr, size_t size);
