@@ -5,6 +5,11 @@
 #include "memory_bandwidth.hpp"
 #include "mpi.h"
 #include <omp.h>
+#include <math.h>
+#include <sstream>
+#include <fstream>
+#include <sys/stat.h>
+#include <unistd.h>
 
 void memory_bandwidth::test_memory_bandwidth(int argc, char* argv[], int argi) {
     int procs = 1;
@@ -37,9 +42,7 @@ void memory_bandwidth::test_memory_bandwidth(int argc, char* argv[], int argi) {
         resultCSV.open(folderName + fileName, std::ios_base::out | std::ios_base::app | std::ios_base::ate);
 
         if (!infile.good()) {
-            resultCSV
-                    << "Size,AvgTime,AvgBandwidth,Processes"
-                    << std::endl;
+            resultCSV << "Size,AvgTime,AvgBandwidth,Processes" << std::endl;
         }
         infile.close();
         for(auto p : seq_mem_bandwidth) {
@@ -80,7 +83,7 @@ std::vector<std::pair<double, double> > memory_bandwidth::sequential_read(char *
     avg_bandwidth /= nRanks;
     bandwidth.push_back({avg_time, avg_bandwidth});
     if(rank == MASTER)
-        std::cout<< iter << " " << avg_time << " " << avg_bandwidth << std::endl;
+        std::cout << avg_time << " " << avg_bandwidth << std::endl;
 
     unsigned long long sum = _mm256_extract_epi64(s, 0);
     std::cout<< "IGNORE( " << sum << " )" << std::endl;
