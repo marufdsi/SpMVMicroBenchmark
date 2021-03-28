@@ -10,7 +10,7 @@
 #include <limits>
 #include <random>
 
-#include "utill.hpp"
+#include "util.hpp"
 
 class memory_bandwidth {
 private:

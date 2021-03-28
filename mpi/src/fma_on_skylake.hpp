@@ -5,7 +5,7 @@
 #ifndef SPMVMICROBENCHMARK_FMA_ON_SKYLAKE_HPP
 #define SPMVMICROBENCHMARK_FMA_ON_SKYLAKE_HPP
 
-#include "utill.hpp"
+#include "util.hpp"
 
 #define VAL(X) (X)
 #ifndef N_CHAINED_FMAS
