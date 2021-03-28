@@ -20,7 +20,7 @@ public:
     memory_bandwidth(size_t mem_size = 1000000, uint32_t iterations=10):mem_size(mem_size), iterations(iterations){}
     memory_bandwidth(uint32_t iterations=10):mem_size(1000000), iterations(iterations){}
 
-    void test_memory_bandwidth();
+    void test_memory_bandwidth(int argc, char* argv[]);
 
     std::vector<double> sequential_read(char* arr, size_t size);
     std::vector<double> random_read(char* arr, size_t size);

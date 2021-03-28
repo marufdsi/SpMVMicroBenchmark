@@ -4,7 +4,12 @@
 
 #include "memory_bandwidth.hpp"
 
-void memory_bandwidth::test_memory_bandwidth() {
+void memory_bandwidth::test_memory_bandwidth(int argc, char* argv[]) {
+    int nRanks, rank;
+    /* Initialize MPI */
+    MPI_Init(&argc, &argv);
+    MPI_Comm_size(MPI_COMM_WORLD, &nRanks);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     const size_t align_bytes = 16;
     const size_t align_alloc_size = mem_size + align_bytes;
     char* dram_array = new char[align_alloc_size];
@@ -13,8 +18,11 @@ void memory_bandwidth::test_memory_bandwidth() {
     for (size_t i = 0; i < mem_size; i++) {
         dram_array_aligned[i] = 0;
     }
+    MPI_Barrier(MPI_COMM_WORLD);
     std::vector<double> seq_mem_bandwidth = sequential_read(dram_array_aligned, mem_size);
-    delete seq_mem_bandwidth;
+    MPI_Barrier(MPI_COMM_WORLD);
+    delete dram_array;
+    MPI_Finalize();
 }
 
 std::vector<double> memory_bandwidth::sequential_read(char *arr, size_t size) {
@@ -35,5 +43,5 @@ std::vector<double> memory_bandwidth::sequential_read(char *arr, size_t size) {
         std::cout<< iter << " " << time_elapsed << " " << bandwidth.back() << std::endl;
     }
     printf("IGNORE(%llu)\n", _mm256_extract_epi64(s, 0));
-    return data;
+    return bandwidth;
 }
