@@ -16,16 +16,23 @@ int main(int argc, char *argv[]){
         fma_obj._fma_(argc, argv, argi);
     } else if(atoi(argv[argi]) == my_util.MEMORY_BANDWIDTH) {
         argi++;
-        size_t mem_size = 1000000;
-        uint32_t iterations=10;
-        if(argc > argi){
-            mem_size = atoi(argv[argi++]);
+        int procs = 1;
+        if (argc > argi) {
+            procs = atoi(argv[argi++]);
         }
-        if(argc > argi){
+        uint32_t iterations=10;
+        if (argc > argi) {
             iterations = atoi(argv[argi++]);
         }
-        memory_bandwidth memoryBandwidth(mem_size, iterations);
-        memoryBandwidth.test_memory_bandwidth(argc, argv, argi);
+        size_t start_mem_size = 1000000;
+        if (argc > argi) {
+            mem_size = atoi(argv[argi++]);
+        }
+        for(size_t mem_size = start_mem_size; mem_size<=16*start_mem_size; mem_size*=2) {
+//            uint32_t iterations = 10;
+            memory_bandwidth memoryBandwidth(procs, mem_size, iterations);
+            memoryBandwidth.test_memory_bandwidth(argc, argv, argi);
+        }
     }
     return 0;
 }
