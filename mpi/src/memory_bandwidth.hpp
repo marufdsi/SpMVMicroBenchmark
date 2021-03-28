@@ -20,7 +20,9 @@ public:
     uint32_t iterations;
     uint32_t mem_size;
     memory_bandwidth(size_t mem_size = 1000000, uint32_t iterations=10):mem_size(mem_size), iterations(iterations){}
-    memory_bandwidth(uint32_t iterations=10):mem_size(1000000), iterations(iterations){}
+    memory_bandwidth(uint32_t iterations=10):iterations(iterations){
+        mem_size = 1000000 ;
+    }
 
     void test_memory_bandwidth(int argc, char* argv[], int argi);
 
