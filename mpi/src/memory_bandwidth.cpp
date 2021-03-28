@@ -28,7 +28,7 @@ void memory_bandwidth::test_memory_bandwidth(int argc, char* argv[], int argi) {
         dram_array_aligned[i] = i%20;
     }
     MPI_Barrier(MPI_COMM_WORLD);
-    std::vector<std::pair<double, double> > seq_mem_bandwidth = sequential_read(dram_array_aligned, mem_size);
+    std::pair<double, double> seq_mem_bandwidth = sequential_read(dram_array_aligned, mem_size);
     MPI_Barrier(MPI_COMM_WORLD);
     if(rank == MASTER){
         std::ofstream resultCSV;
