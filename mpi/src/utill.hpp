@@ -8,17 +8,20 @@
 #include <unordered_map>
 
 #define MASTER 0
+
 class utill {
-    std::unordered_map<std::string, int> ALGORITHMS({
-        {"FMA", 1},
-        {"SEQUENTIAL_READ", 2},
-        {"RANDOM_READ", 3}
-    });
-    std::enum ALGO_NAMES{
-        FMA,
-        SEQUENTIAL_READ,
-        RANDOM_READ
-    };
+    std::unordered_map<std::string, int> ALGORITHMS( {
+        { "FMA", 1 },
+        { "SEQUENTIAL_READ", 2 },
+        { "RANDOM_READ", 3 }
+    }
+    );
+
+//    std::enum ALGO_NAMES{
+//        FMA,
+//        SEQUENTIAL_READ,
+//        RANDOM_READ
+//    };
 };
 
 
