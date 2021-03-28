@@ -5,6 +5,7 @@
 #ifndef SPMVMICROBENCHMARK_MEMORY_BANDWIDTH_HPP
 #define SPMVMICROBENCHMARK_MEMORY_BANDWIDTH_HPP
 
+#include <iostream>
 #include <immintrin.h>
 #include <limits>
 #include <random>
