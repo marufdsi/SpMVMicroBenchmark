@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
         }
         size_t start_mem_size = 1000000;
         if (argc > argi) {
-            mem_size = atoi(argv[argi++]);
+            start_mem_size = std::strtoull(argv[argi++], NULL, 10);
         }
         for(size_t mem_size = start_mem_size; mem_size<=16*start_mem_size; mem_size*=2) {
 //            uint32_t iterations = 10;
