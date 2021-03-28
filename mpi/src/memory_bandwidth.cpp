@@ -54,8 +54,8 @@ void memory_bandwidth::test_memory_bandwidth(int argc, char* argv[], int argi) {
     MPI_Finalize();
 }
 
-std::vector<std::pair<double, double> > memory_bandwidth::sequential_read(char *arr, size_t size) {
-    std::vector<double> bandwidth;
+std::pair<double, double> memory_bandwidth::sequential_read(char *arr, size_t size) {
+    std::pair<double, double> bandwidth;
     __m256i s;
     double total_time = 0, total_bandwidth = 0, avg_time = 0, avg_bandwidth = 0;
     for (uint32_t iter = 1; iter <= iterations+skip; iter++) {
@@ -81,7 +81,7 @@ std::vector<std::pair<double, double> > memory_bandwidth::sequential_read(char *
 
     MPI_Reduce(&total_bandwidth, &avg_bandwidth, 1, MPI_DOUBLE, MPI_SUM, MASTER, MPI_COMM_WORLD);
     avg_bandwidth /= nRanks;
-    bandwidth.push_back({avg_time, avg_bandwidth});
+    bandwidth = std::make_pair(avg_time, avg_bandwidth);
     if(rank == MASTER)
         std::cout << avg_time << " " << avg_bandwidth << std::endl;
 
