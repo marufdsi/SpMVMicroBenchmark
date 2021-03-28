@@ -11,12 +11,13 @@
 #define MASTER 0
 
 class utill {
-    std::unordered_map<std::string, int> ALGORITHMS( {
-        { "FMA", 1 },
-        { "SEQUENTIAL_READ", 2 },
-        { "RANDOM_READ", 3 }
-    }
-    );
+
+public:
+    std::unordered_map<std::string, int> wordMap(
+    {
+        { "First", 1 },
+        { "Second", 2 },
+        { "Third", 3 } });
 
 //    std::enum ALGO_NAMES{
 //        FMA,
