@@ -18,7 +18,7 @@ void memory_bandwidth::test_memory_bandwidth(int argc, char* argv[], int argi) {
     char* dram_array_aligned = dram_array + ((uintptr_t)dram_array % align_bytes);
 
     for (size_t i = 0; i < mem_size; i++) {
-        dram_array_aligned[i] = 0;
+        dram_array_aligned[i] = i%20;
     }
     MPI_Barrier(MPI_COMM_WORLD);
     std::vector<double> seq_mem_bandwidth = sequential_read(dram_array_aligned, mem_size);
