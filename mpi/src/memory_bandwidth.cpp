@@ -6,7 +6,7 @@
 #include "mpi.h"
 
 void memory_bandwidth::test_memory_bandwidth(int argc, char* argv[]) {
-    int nRanks, rank;
+
     /* Initialize MPI */
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &nRanks);
@@ -41,7 +41,8 @@ std::vector<double> memory_bandwidth::sequential_read(char *arr, size_t size) {
         const double t1 = MPI_Wtime();
         double time_elapsed = t1 - t0;
         bandwidth.push_back((double)size / time_elapsed);
-        std::cout<< iter << " " << time_elapsed << " " << bandwidth.back() << std::endl;
+        if(rank == MASTER)
+            std::cout<< iter << " " << time_elapsed << " " << bandwidth.back() << std::endl;
     }
     printf("IGNORE(%llu)\n", _mm256_extract_epi64(s, 0));
     return bandwidth;

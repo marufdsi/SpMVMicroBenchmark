@@ -6,6 +6,7 @@
 #define SPMVMICROBENCHMARK_UTILL_HPP
 
 #define MASTER 0
+int nRanks, rank;
 class utill {
 
 };

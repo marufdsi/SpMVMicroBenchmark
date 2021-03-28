@@ -13,7 +13,6 @@
 #include "utill.hpp"
 
 int fma_on_skylake::_fma_(int argc, char *argv[]) {
-    int nRanks, rank;
     /* Initialize MPI */
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &nRanks);
