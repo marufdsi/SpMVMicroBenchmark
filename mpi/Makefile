@@ -1,6 +1,6 @@
 TARGET=micro
 CXX=icpc
-CXXFLAGS= -qopenmp -O3 -std=c++17 -Wall -xCORE-AVX512 -qopt-zmm-usage=high
+CXXFLAGS= -qopenmp -O3 -Wall -xCORE-AVX512 -qopt-zmm-usage=high
 MPIFLAGS = -I/apps/pkg/openmpi/4.0.3/rhel7_u5/pbs/gnu_mxm/include -pthread -L/usr/lib64 -Wl,-rpath -Wl,/usr/lib64 -Wl,-rpath -Wl,/apps/pkg/openmpi/4.0.3/rhel7_u5/pbs/gnu_mxm/lib -Wl,--enable-new-dtags -L/apps/pkg/openmpi/4.0.3/rhel7_u5/pbs/gnu_mxm/lib -lmpi_cxx -lmpi
 
 MPI_COMPILE_FLAGS = $(shell mpicxx --showme:compile)

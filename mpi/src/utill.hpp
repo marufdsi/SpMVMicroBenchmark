@@ -13,11 +13,7 @@
 class utill {
 
 public:
-    std::unordered_map<std::string, int> wordMap(
-    {
-        { "First", 1 },
-        { "Second", 2 },
-        { "Third", 3 } });
+    std::unordered_map<std::string, int> wordMap;
 
 //    std::enum ALGO_NAMES{
 //        FMA,
