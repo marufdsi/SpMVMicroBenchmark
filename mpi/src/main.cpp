@@ -16,7 +16,7 @@ int main(int argc, char *argv[]){
         fma_obj._fma_(argc, argv, argi);
     } else if(atoi(argv[argi]) == my_util.MEMORY_BANDWIDTH) {
         argi++;
-        memory_bandwidth memoryBandwidth();
+        memory_bandwidth memoryBandwidth = memory_bandwidth();
         memoryBandwidth.test_memory_bandwidth(argc, argv, argi);
     }
     return 0;
