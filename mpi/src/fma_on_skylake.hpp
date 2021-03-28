@@ -18,7 +18,7 @@ public:
     const int flops_per_calc = 2; // Multiply + add = 2 instructions
     const int n_chained_fmas = VAL(N_CHAINED_FMAS); // Must be tuned for architectures here and in blocks (R) and in (E)
 
-    int _fma_(int argc, char *argv[]);
+    int _fma_(int argc, char *argv[], int argi);
 };
 
 #endif //SPMVMICROBENCHMARK_FMA_ON_SKYLAKE_HPP

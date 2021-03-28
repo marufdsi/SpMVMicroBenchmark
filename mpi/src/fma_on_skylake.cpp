@@ -12,7 +12,7 @@
 #include "fma_on_skylake.hpp"
 #include "utill.hpp"
 
-int fma_on_skylake::_fma_(int argc, char *argv[]) {
+int fma_on_skylake::_fma_(int argc, char *argv[], int argi) {
     int nRanks, rank;
     /* Initialize MPI */
     MPI_Init(&argc, &argv);
@@ -21,7 +21,7 @@ int fma_on_skylake::_fma_(int argc, char *argv[]) {
 
     int procs = 1;
     if (argc > 1)
-        procs = atoi(argv[1]);
+        procs = atoi(argv[argi]);
     MPI_Barrier(MPI_COMM_WORLD);
     const double t0 = MPI_Wtime();  // start timer
 //    const double t0 = omp_get_wtime();  // start timer
