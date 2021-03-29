@@ -52,38 +52,35 @@ void memory_bandwidth::test_memory_bandwidth(int argc, char* argv[], int argi) {
 }
 
 std::pair<double, double> memory_bandwidth::sequential_read(char *arr, size_t size) {
-    std::pair<double, double> bandwidth;
-    __m256i s;
-    double total_time = 0, total_bandwidth = 0, avg_time = 0, avg_bandwidth = 0;
+    std::pair<double, double> results;
+    __m256i s = _mm256_setzero_si256();
+    double avg_time = 0, avg_bandwidth = 0;
+    double t_start=0, t_end=0;
+    const size_t test_mem_size = size / sizeof(__m256i);
+    __m256i* test_mem = reinterpret_cast<__m256i*>(arr);
     for (uint32_t iter = 1; iter <= iterations+skip; iter++) {
-        const double t0 = MPI_Wtime();
-        s = _mm256_setzero_si256();
-        __m256i* test_mem = reinterpret_cast<__m256i*>(arr);
-        const size_t test_mem_size = size / sizeof(__m256i);
-
+        if (iter == skip) {
+            t_start = MPI_Wtime ();
+        }
         for (size_t i = 0; i < test_mem_size; i++) {
             s += _mm256_load_si256(test_mem + i);
         }
-        const double t1 = MPI_Wtime();
-        double time_elapsed = (t1 - t0);
-        if(iter>=skip) {
-            total_time += time_elapsed;
-            total_bandwidth += (double) size / time_elapsed;
-        }
     }
+    t_end = MPI_Wtime();
+    double time_elapsed = (t1 - t0);
+    double bandwidth = ((double) size * iterations) / time_elapsed;
+
     MPI_Barrier(MPI_COMM_WORLD);
-    total_time /= iterations;
-    total_bandwidth /= iterations;
-    MPI_Reduce(&total_time, &avg_time, 1, MPI_DOUBLE, MPI_SUM, MASTER, MPI_COMM_WORLD);
+    MPI_Reduce(&time_elapsed, &avg_time, 1, MPI_DOUBLE, MPI_SUM, MASTER, MPI_COMM_WORLD);
     avg_time /= nRanks;
 
-    MPI_Reduce(&total_bandwidth, &avg_bandwidth, 1, MPI_DOUBLE, MPI_SUM, MASTER, MPI_COMM_WORLD);
+    MPI_Reduce(&bandwidth, &avg_bandwidth, 1, MPI_DOUBLE, MPI_SUM, MASTER, MPI_COMM_WORLD);
     avg_bandwidth /= nRanks;
-    bandwidth = std::make_pair(avg_time, avg_bandwidth);
+    results = std::make_pair(avg_time, avg_bandwidth);
     if(rank == MASTER)
         std::cout << avg_time << " " << avg_bandwidth << std::endl;
 
     unsigned long long sum = _mm256_extract_epi64(s, 0);
     std::cout<< "IGNORE( " << sum << " )" << std::endl;
-    return bandwidth;
+    return results;
 }
