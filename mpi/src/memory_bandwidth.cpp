@@ -67,7 +67,7 @@ std::pair<double, double> memory_bandwidth::sequential_read(char *arr, size_t si
         }
     }
     t_end = MPI_Wtime();
-    double time_elapsed = (t1 - t0);
+    double time_elapsed = (t_end - t_start);
     double bandwidth = ((double) size * iterations) / time_elapsed;
 
     MPI_Barrier(MPI_COMM_WORLD);
