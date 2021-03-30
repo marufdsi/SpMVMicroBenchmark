@@ -20,7 +20,7 @@ int main(int argc, char *argv[]){
         if (argc > argi) {
             procs = atoi(argv[argi++]);
         }
-        size_t mem_size = 1000000;
+        size_t mem_size = 1024*1024;
         if (argc > argi) {
             mem_size = std::strtoull(argv[argi++], NULL, 10);
         }
