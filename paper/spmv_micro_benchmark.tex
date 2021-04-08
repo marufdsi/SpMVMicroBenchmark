@@ -151,6 +151,15 @@ In our experiment we divide the core SpMV calculation into two major parts,
 	\caption{Single and double precision memory access bandwidth on Skylake processor.}
 	\label{fig:stream-copy-bandwidth}
 \end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\subfigure[Single Precision.]{\includegraphics[width=0.96\linewidth]{figures/stream/skylake_mpi_copy_double_precision_time.pdf}		\label{fig:stream-single-copy}}
+	%\subfigure[Double Precision.]{\includegraphics[width=0.48\linewidth]{figures/stream/skylake_mpi_copy_double_precision.pdf}		\label{fig:stream-double-copy}}
+	\caption{double precision memory access time on Skylake processor.}
+	\label{fig:stream-copy-bandwidth}
+\end{figure}
+
 Figure~\ref{fig:stream-copy-bandwidth} shows, when the size of the data is more than 1GB the bandwidth shows the consistency 
 with the size of the data(132 GB/s).
 
@@ -215,6 +224,7 @@ P\ =\ Base\_Clock\_Frequency\times Vector\_Width\times \frac{FLOPs}{Instruction}
 \begin{tabular}[c]{| l | c | c |}
 \hline
 Elements & Data Type & Size of Elements \\ \hline
+row elements & Integer & 
 \end{tabular}
 \end{table}
 
