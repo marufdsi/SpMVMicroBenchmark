@@ -173,7 +173,7 @@ we should at least use $4\times 2=8$ instruction at a time to populate the pipel
 	\label{fig:mpi-skl-roofline}
 \end{figure}
 
-
+\begin{comment}
 \begin{figure}[hbt!]
 	\centering
 	\subfigure[Vector Width: 4]{\includegraphics[width=0.48\linewidth]{figures/cascade_lake_mpi_fma_roofline_model_for_vec_4.pdf}		\label{fig:mpi-cas-vec-4}}
@@ -181,7 +181,7 @@ we should at least use $4\times 2=8$ instruction at a time to populate the pipel
 	\caption{Cascade Lake: (MPI)Roofline model for bandwidth for FMA operation}
 	\label{fig:mpi-cas-roofline}
 \end{figure}
-
+\end{comment}
 
 \begin{figure}[hbt!]
 	\centering
@@ -191,7 +191,7 @@ we should at least use $4\times 2=8$ instruction at a time to populate the pipel
 	\label{fig:omp-skl-roofline}
 \end{figure}
 
-
+\begin{comment}
 \begin{figure}[hbt!]
 	\centering
 	\subfigure[Vector Width: 4]{\includegraphics[width=0.48\linewidth]{figures/cascade_lake_omp_fma_roofline_model_for_vec_4.pdf}		\label{fig:omp-cas-vec-4}}
@@ -199,12 +199,24 @@ we should at least use $4\times 2=8$ instruction at a time to populate the pipel
 	\caption{Cascade lake: (Shared memory parallel)Roofline model for bandwidth for FMA operation}
 	\label{fig:omp-cas-roofline}
 \end{figure}
+\end{comment}
 
 We can estimate the theoritical peak performance a single FMA by the following equation,
 \begin{eqnarray}
 P\ =\ Base\_Clock\_Frequency\times Vector\_Width\times \frac{FLOPs}{Instruction}.
 \end{eqnarray}
 
+\subsection{Global 1D-SpMV}
+\subsubsection{CSR}
+\begin{table}[htb]
+\caption{Memmory Accesses.}
+\label{tab:g1d-csr-spmv-mem-access}
+\centering
+\begin{tabular}[c]{| l | c | c |}
+\hline
+Elements & Data Type & Size of Elements \\ \hline
+\end{tabular}
+\end{table}
 
 \bibliographystyle{unsrt}
 \bibliography{spmv}
