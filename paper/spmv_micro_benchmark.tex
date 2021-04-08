@@ -117,7 +117,7 @@ techniques. The models are accurate enough to predict the best
 configuration to execute SpMV given a matrix.
 
 
-\section{\todo{SpMV on AVX-512 Architecture (Skylake, Cascade Lake)}}
+\section{\todo{SpMV on AVX-512 Architecture (Skylake)}}
 SpMV on the distributed system initially can be divided into two parts, 
 \begin{itemize}
 \item MPI Communication: latency to share the vector and gather the results from the MPI process. 
@@ -134,6 +134,18 @@ In our experiment we divide the core SpMV calculation into two major parts,
 \item Run time for FMA: $L_{FMA}\times NNZ$, where $L_{FMA}$ is the latency of a single FMA and $NNZ$ is number of nonzeros.
 \item Read-write latency: $L_{RW}$
 \end{itemize} 
+
+\subsubsection{Memory Access bandwidth}
+\begin{figure}[hbt!]
+	\centering
+	\subfigure[Single Precision.]{\includegraphics[width=0.48\linewidth]{figures/stream/skylake_mpi_copy_single_precision.pdf}		\label{fig:stream-single-copy}}
+	\subfigure[Double Precision.]{\includegraphics[width=0.48\linewidth]{figures/stream/skylake_mpi_copy_double_precision.pdf}		\label{fig:stream-double-copy}}
+	\caption{Single and double precision memory access bandwidth on Skylake processor.}
+	\label{fig:stream-copy-bandwidth}
+\end{figure}
+Figure~\ref{fig:stream-copy-bandwidth} shows, when the size of the data is more than 1GB the bandwidth shows the consistency 
+with the size of the data(132 GB/s).
+
 
 \subsubsection{Roofline Model for FMA}
 The throughput of Skylake and Cascade Lake are same as 2 instructions per cycle and the latency of FMA is 4 cycles for both of them. So there is a potential of pipelinling($2\times 4 = 8$) to get the optimal results. Now, both of the architecture 
