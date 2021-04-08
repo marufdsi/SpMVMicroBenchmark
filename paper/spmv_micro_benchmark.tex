@@ -125,6 +125,14 @@ SpMV on the distributed system initially can be divided into two parts,
 \end{itemize}
 
 \subsection{MPI communication}
+\begin{figure}[hbt!]
+	\centering
+	\subfigure[MPI All\_GatherV.]{\includegraphics[width=0.48\linewidth]{figures/osu/skylake_mpi_allgatherv.pdf}		\label{fig:osu-skylake-allgatherv}}
+	\subfigure[MPI All\_Reduce.]{\includegraphics[width=0.48\linewidth]{figures/osu/skylake_mpi_allreduce.pdf}		\label{fig:osu-skylake-reduce}}
+	\caption{Latency of the MPI collectives(All\_GatherV and All\_Reduce) on Skylake.}
+	\label{fig:osu-collectives}
+\end{figure}
+
 
 \subsection{Core SpMV Calculation}
 We can represent the basic SpMV by $y=y+Val*x$, which contains two floating point operation(multiply and addition). 
