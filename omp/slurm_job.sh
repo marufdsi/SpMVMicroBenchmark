@@ -7,8 +7,8 @@
 #SBATCH --nodes=1                   # Run all processes on a single node
 #SBATCH --ntasks=1                   # Run a single task
 #SBATCH --ntasks-per-node=1       # maximum task per node
-#SBATCH --cpus-per-task=36
-#SBATCH --constraint=skylake
+#SBATCH --cpus-per-task=48
+#SBATCH --constraint=caslake #skylake
 #SBATCH --mem=150gb                  # Total memory limit
 #SBATCH --time=30:00:00              # Time limit hrs:min:sec
 #SBATCH --output=fma_skylake_%j.log     # Standard output and error log
@@ -21,8 +21,8 @@ module load openmpi/4.0.3
 module load intel/19.0.0
 module load gcc/8.2.0
 
-#lscpu
+lscpu
 processor=1
 target="micro-vec"$1"-fma"$2
-./$target $processor
+#./$target $processor
 
